@@ -23,15 +23,19 @@ constructor(private val placesServiceFactory: PlacesServiceFactory) : GetPlaces{
 
     override fun getVenues(): Observable<Either<NetworkError, SearchVenuesResponse>> {
         return Observable.create{ subscriber ->
-            val call = placesService.getVenues(coordinates, limit, categoryId, radius).execute()
-            if(call.isSuccessful){
-                val response = call.body()
-                if(response != null) {
-                    subscriber.onNext(Either.Right(response))
+            try{
+                val call = placesService.getVenues(coordinates, limit, categoryId, radius).execute()
+                if(call.isSuccessful){
+                    val response = call.body()
+                    if(response != null) {
+                        subscriber.onNext(Either.Right(response))
+                    } else {
+                        subscriber.onComplete()
+                    }
                 } else {
-                    subscriber.onComplete()
+                    subscriber.onNext(Either.Left(NetworkError.ERROR))
                 }
-            } else {
+            } catch (ex: Exception){
                 subscriber.onNext(Either.Left(NetworkError.ERROR))
             }
         }
