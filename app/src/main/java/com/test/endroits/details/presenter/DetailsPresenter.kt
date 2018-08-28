@@ -1,6 +1,6 @@
 package com.test.endroits.details.presenter
 
-import com.test.endroits.home.domain.GetPlaces
+import com.test.endroits.details.domain.GetVenueDetails
 import com.test.endroits.infrastructure.base.BasePresenter
 import com.test.endroits.infrastructure.base.BaseView
 import com.test.endroits.infrastructure.either
@@ -9,17 +9,17 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class DetailsPresenter @Inject
-constructor(private val getPlaces: GetPlaces): BasePresenter<DetailsPresenter.View>(){
+constructor(private val getVenueDetails: GetVenueDetails): BasePresenter<DetailsPresenter.View>(){
 
     fun initialize(view: View, venueId: String){
         initializeView(view)
-        getVenueDetails(venueId)
+        subscribeToGetVenueDetails(venueId)
     }
 
-    private fun getVenueDetails(venueId: String){
+    private fun subscribeToGetVenueDetails(venueId: String){
         if(compositeDisposable.size() == 0) {
             compositeDisposable.add(
-                    getPlaces.getVenueDetails(venueId)
+                    getVenueDetails(venueId)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnComplete {

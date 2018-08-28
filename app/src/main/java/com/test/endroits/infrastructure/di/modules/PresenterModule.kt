@@ -1,5 +1,6 @@
 package com.test.endroits.infrastructure.di.modules
 
+import com.test.endroits.details.domain.GetVenueDetails
 import com.test.endroits.details.presenter.DetailsPresenter
 import com.test.endroits.home.domain.GetPlaces
 import com.test.endroits.home.presenter.HomePresenter
@@ -15,7 +16,7 @@ class PresenterModule{
     }
 
     @Provides
-    fun provideDetailsPresenter(getPlaces: GetPlaces): DetailsPresenter {
-        return DetailsPresenter(getPlaces)
+    fun provideDetailsPresenter(getVenueDetails: GetVenueDetails): DetailsPresenter {
+        return DetailsPresenter(getVenueDetails)
     }
 }

@@ -20,7 +20,7 @@ constructor(private val getPlaces: GetPlaces): BasePresenter<HomePresenter.View>
     private fun getVenues(){
         if(compositeDisposable.size() == 0) {
             compositeDisposable.add(
-                    getPlaces.getVenues()
+                    getPlaces()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnComplete {
