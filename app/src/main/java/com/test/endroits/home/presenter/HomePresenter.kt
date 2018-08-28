@@ -14,13 +14,13 @@ constructor(private val getPlaces: GetPlaces): BasePresenter<HomePresenter.View>
 
     fun initialize(view: View){
         initializeView(view)
-        subscribeToGetPlaces()
+        getVenues()
     }
 
-    private fun subscribeToGetPlaces(){
+    private fun getVenues(){
         if(compositeDisposable.size() == 0) {
             compositeDisposable.add(
-                    getPlaces()
+                    getPlaces.getVenues()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnComplete {

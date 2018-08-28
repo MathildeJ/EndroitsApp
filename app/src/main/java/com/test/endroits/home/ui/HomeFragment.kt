@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.test.endroits.R
+import com.test.endroits.details.ui.DetailsActivity
 import com.test.endroits.home.data.model.Venue
 import com.test.endroits.home.presenter.HomePresenter
 import com.test.endroits.infrastructure.base.BaseFragment
@@ -31,7 +32,6 @@ class HomeFragment: BaseFragment(), HomePresenter.View, OnVenueSelectionListener
 
     @Inject lateinit var presenter: HomePresenter
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.initialize(this)
@@ -52,6 +52,11 @@ class HomeFragment: BaseFragment(), HomePresenter.View, OnVenueSelectionListener
     }
 
     override fun onVenueSelected(id: String) {
+        startActivity(DetailsActivity.getLaunchIntent(context, id))
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.cleanUp()
     }
 }

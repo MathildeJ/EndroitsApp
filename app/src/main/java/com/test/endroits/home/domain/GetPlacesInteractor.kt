@@ -1,5 +1,6 @@
 package com.test.endroits.home.domain
 
+import com.test.endroits.details.data.VenueDetailsResponse
 import com.test.endroits.home.data.PlacesService
 import com.test.endroits.home.data.model.SearchVenuesResponse
 import com.test.endroits.home.domain.model.NetworkError
@@ -61,10 +62,26 @@ constructor() : GetPlaces{
     }
 
 
-    override fun execute(): Observable<Either<NetworkError, SearchVenuesResponse>> {
+    override fun getVenues(): Observable<Either<NetworkError, SearchVenuesResponse>> {
         return Observable.create{ subscriber ->
             val call = placesService
                     .getVenues(coordinates, limit, categoryId, radius).execute()
+            if(call.isSuccessful){
+                val response = call.body()
+                if(response != null) {
+                    subscriber.onNext(Either.Right(response))
+                } else {
+                    subscriber.onComplete()
+                }
+            } else {
+                subscriber.onNext(Either.Left(NetworkError.ERROR))
+            }
+        }
+    }
+
+    override fun getVenueDetails(venueId: String): Observable<Either<NetworkError, VenueDetailsResponse>> {
+        return Observable.create{ subscriber ->
+            val call = placesService.getVenueDetails(venueId).execute()
             if(call.isSuccessful){
                 val response = call.body()
                 if(response != null) {
