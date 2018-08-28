@@ -1,4 +1,4 @@
-package com.test.endroits.infrastructure.di
+package com.test.endroits.infrastructure.di.annotations
 
 
 import kotlin.annotation.Retention

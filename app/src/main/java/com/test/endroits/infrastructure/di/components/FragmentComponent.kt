@@ -1,7 +1,7 @@
 package com.test.endroits.infrastructure.di.components
 
 import com.test.endroits.home.ui.HomeFragment
-import com.test.endroits.infrastructure.di.PerActivity
+import com.test.endroits.infrastructure.di.annotations.PerActivity
 import com.test.endroits.infrastructure.di.modules.ActivityModule
 import dagger.Component
 
